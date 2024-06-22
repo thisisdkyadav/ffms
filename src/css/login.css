@@ -1,0 +1,20 @@
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-button {
+    padding: 24px 36px;
+    border-radius: 10000px;
+    background-color: #002fff;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: ease-in-out 200ms all;
+    box-shadow: 0 4px 14px 2px rgba(55, 57, 73, 0.27);
+
+}

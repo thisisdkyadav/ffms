@@ -1,4 +1,4 @@
-input,.add-new-cat {
+.add-new input,.add-new-cat , .add-new-contact{
     margin: 20px 10px;
     border: none;
     padding: 12px 24px;
@@ -7,35 +7,31 @@ input,.add-new-cat {
     border-radius: 10px;
     /* border-radius: 2px 2px 0px 0px; */
     /* border-bottom: 1px solid #0051ff; */
-    color: #000000;
     box-shadow: 0 2px 6px 1px rgba(77, 77, 77, 0.222);
 
     font-size: 1.03rem;
     outline: none;
+    max-width: 90%;
 
     
 }
 
-.add-new-form {
+.add-new .add-new-form {
     padding: 50px 20px 0 20px;
     width: 100%;
 }
 
-.add-new-person{
-    /* width: 80%; */
-}
-
-.add-new-cat{
+.add-new .add-new-cat{
 
 }
 
-.add-button-div {
+.add-new .add-button-div {
     display: flex;
     justify-content: end;
     padding: 0px 20px ;
 }
 
-button{
+.add-new button{
     margin: 20px;
     padding: 16px 28px;
     background-color: #002fff;

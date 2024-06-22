@@ -8,6 +8,7 @@
     margin: 10px auto;
     border-radius: 10px;
     box-shadow: 0 2px 4px 0 rgba(72, 72, 72, 0.1);
+    overflow: hidden;
 
 
 }
@@ -17,12 +18,10 @@
     height: var(--bar-height);
     background-color: #ff4b4b;
     margin: 0 auto;
-    border-radius: 10px;
 }
 
 .report-bar .bar .bar-slider {
     height: 100%;
     background-color: #01ce53;
-    transition: width 1s;
-    border-radius: 10px 0 0 10px;
+    transition: all ease-in-out 2s;
 }
