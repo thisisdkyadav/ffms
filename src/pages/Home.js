@@ -4,6 +4,7 @@ import ReportBar from '../components/ReportBar'
 import { db } from "../config/firebase";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import '../css/home.css'
+import HomePayHistory from '../components/HomePayHistory';
 
 
 const Home = () => {
@@ -11,8 +12,6 @@ const Home = () => {
   let today = new Date();
   let monthAgo = new Date(today.setMonth(today.getMonth() - 1));
 
-
-  // const selectModeList = [{type:"date", value:date}, {type:"month", value:month}, {type:"year", value:year}]
 
   const [mode, setMode] = React.useState(0);
   const [history, setHistory] = useState(null);
@@ -26,25 +25,27 @@ const Home = () => {
     let initialTimeID = startDate.current.value.replace(/-/g, "") + "000000";
     let finalTimeID = endDate.current.value.replace(/-/g, "") + "999999";
     if (mode === 0) {
-      const paymentsQuery = query(collection(db, "transactions"), where("timeid", ">=", initialTimeID), where("timeid", "<=", finalTimeID), orderBy("timeid", "desc"));
-      const querySnapshot = await getDocs(paymentsQuery);
-      setHistory(querySnapshot);
+      var paymentsQuery = query(collection(db, "transactions"), where("timeid", ">=", initialTimeID), where("timeid", "<=", finalTimeID), orderBy("timeid", "desc"));
     } else {
-      const paymentsQuery = query(collection(db, "transactions"), where("timeid", ">=", initialTimeID), where("timeid", "<=", finalTimeID), orderBy("timeid", "desc"), where("type", "==", mode === 1 ? "Income" : "Expense"));
-      const querySnapshot = await getDocs(paymentsQuery);
-      setHistory(querySnapshot);
+      var paymentsQuery = query(collection(db, "transactions"), where("timeid", ">=", initialTimeID), where("timeid", "<=", finalTimeID), orderBy("timeid", "desc"), where("type", "==", mode === 1 ? "Income" : "Expense"));
     }
+    const querySnapshot = await getDocs(paymentsQuery);
+    const transactions = {}; // Create an empty object for key-value pairs
+    querySnapshot.forEach((doc) => {
+      const dataWithId = { ...doc.data(), id: doc.id };
+      transactions[doc.id] = dataWithId;
+    });
+    setHistory(transactions);
   }
 
   const handleReport = () => {
     let profit = 0;
     let loss = 0;
-    history.docs.map((doc) => {
-      const item = doc.data();
-      if (item.type === "Income") {
-        profit += parseInt(item.amount);
+    Object.values(history).map((payment) => {
+      if (payment.type === "Income") {
+        profit += parseFloat(payment.amount);
       } else {
-        loss += parseInt(item.amount);
+        loss += parseFloat(payment.amount);
       }
     })
     setProfit(profit)
@@ -69,6 +70,7 @@ const Home = () => {
   useEffect(() => {
     if (history) {
       handleReport()
+      // console.log(history.docs[0].data());
     }
 
     return () => {
@@ -87,42 +89,24 @@ const Home = () => {
 
       <div className="home">
         <div className="rangeSelector">
-          <input type="date" ref={startDate} onChange={loadData} />
-          <input type="date" ref={endDate} onChange={loadData} />
+          <div className="date-selector">
+            <input type="date" ref={startDate} onChange={loadData} />
+            <input type="date" ref={endDate} onChange={loadData} />
+          </div>
         </div>
         <div className="report">
-          <ReportBar profit={profit} loss={loss} />
+          {/* <ReportBar profit={profit} loss={loss} /> */}
           <div className="report-item">
-            <div className='amount income' >₹{profit}</div>
+            <div className='amount income' >₹{(profit).toFixed(0)}</div>
             <div>-</div>
-            <div className='amount expense' >₹{loss}</div>
+            <div className='amount expense' >₹{(loss).toFixed(0)}</div>
             <div>=</div>
-            <div className={profit - loss > 0 ? 'amount income' : 'amount expense'} >₹{profit - loss}</div>
+            <div className={profit - loss > 0 ? 'amount income' : 'amount expense'} >₹{(profit - loss).toFixed(0)}</div>
           </div>
         </div>
 
+        <HomePayHistory history={history} />
 
-        <div className="home-header">
-          <div className="home-header-item date">Date</div>
-          <div className="home-header-item person">Person</div>
-          {/* <div className="home-header-item">Category</div> */}
-          <div className="home-header-item amount">Amount</div>
-        </div>
-        <div className="home-data">
-          {history && history.docs.map((doc) => {
-            const item = doc.data();
-            const id = doc.id;
-            return (
-              <div key={id} className="home-item">
-                <div className="home-item-data date">{item.date.slice(2).split('-').reverse().join('-')}</div>
-                <div className="home-item-data person">{item.person}</div>
-                {/* <div className="home-item-data">{item.category}</div> */}
-                <div className={item.type === "Income" ? "home-item-data amount income" : "home-item-data amount expense"}>₹{item.amount}</div>
-              </div>
-            );
-          })}
-          <div style={{height:200}}></div>
-        </div>
       </div>
 
 

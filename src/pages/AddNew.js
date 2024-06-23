@@ -7,21 +7,35 @@ import { getDocs, query, orderBy } from "firebase/firestore";
 
 const AddNew = () => {
 
+  const catList = ["Not Selected", "Home", "Work"]
+
   const [mode, setMode] = useState(0)
   const [contacts, setContacts] = useState(null)
   const [nameOption, setNameOption] = useState("other")
+  const [catOption, setCatOption] = useState(0)
 
 
   const date = useRef()
   const amount = useRef()
   const description = useRef()
   const person = useRef()
-  const category = useRef()
   const name = useRef()
 
 
-  const toggleNameOption = (e) => {
-    setNameOption(e.target.value)
+  const resetForm = () => { 
+    date.current.value = new Date().toISOString().split('T')[0]
+    amount.current.value = 0
+    description.current.value = ""
+    person.current.value = ""
+    name.current.value = ""
+    setNameOption("other")
+    setCatOption(0)
+   }
+
+
+  const changeCat = (e) => {
+    const category = e.target.options[e.target.selectedIndex].getAttribute('data-category')
+    setCatOption(catList.indexOf(category))
   }
 
 
@@ -46,7 +60,7 @@ const AddNew = () => {
     let ss = String(now.getSeconds()).padStart(2, '0');
 
     let time = hh + mm + ss;
-    let timeid= date.current.value.replace(/-/g, "") + time;
+    let timeid = date.current.value.replace(/-/g, "") + time;
     await addDoc(collection(db, "transactions"), {
 
       timeid: timeid,
@@ -55,10 +69,11 @@ const AddNew = () => {
       amount: amount.current.value,
       date: date.current.value,
       description: description.current.value,
-      category: category.current.value,
+      category: catList[catOption],
       type: mode === 0 ? "Income" : "Expense"
     }).then(() => {
       alert("Payment successfully written!");
+      resetForm()
     }).catch((error) => {
       console.error("Error adding document: ", error);
     });
@@ -77,24 +92,42 @@ const AddNew = () => {
           <SecNav secNavList={["Income", "Expense"]} activeSecNav={mode} handleSecNavClick={setMode} />
         </div>
         <div className="add-new-form">
-          <select className='add-new-contact' onChange={toggleNameOption} ref={person}>
-            <option value="other">Other</option>
-            {contacts && contacts.docs.map((doc) => {
-              const person = doc.data();
-              const id = doc.id;
-              return (
-                <option key={id} value={id+"-"+person.name}>{person.name}</option>
-              );
-            })}
-          </select>
-          {nameOption==="other"&&<input className='add-new-person' placeholder="Name" ref={name} />}
+
+          <div className='add-new-cat'>
+            <div className="add-new-cat-list">
+              <div className={nameOption === "other" ? 'add-new-cat-option active' : 'add-new-cat-option'} onClick={() => setNameOption("other")}>Other</div>
+              <div className={nameOption === "contacts" ? 'add-new-cat-option active' : 'add-new-cat-option'} onClick={() => setNameOption("contacts")}>Contacts</div>
+            </div>
+          </div>
+
+
+          {nameOption === "other"
+            ? <input className='add-new-person' placeholder="Name" ref={name} />
+            : <select className='add-new-contact' onChange={changeCat} ref={person}>
+              <option value="">Select contact</option>
+              {contacts && contacts.docs.map((doc) => {
+                const person = doc.data();
+                const id = doc.id;
+                return (
+                  <option key={id} data-category={person.category} value={id + "-" + person.name}>{person.name}</option>
+                );
+              })}
+            </select>
+          }
           <input type="text" className='add-new-desc' placeholder="Description" ref={description} />
-          <input type="number" className={mode === 0 ? 'add-new-amount income' : 'add-new-amount expense'} placeholder="Amount" ref={amount} />
-          <input type="date" className='add-new-date' ref={date} />
-          <select className='add-new-cat' ref={category}>
-            <option value="Home">Home</option>
-            <option value="work">Work</option>
-          </select>
+          <div className="date-amount-div">
+            <input type="date" className='add-new-date' ref={date} />
+            <div className="amount-input-div">
+              <span className="rupee-sign">₹</span>
+              <input type="number" className={mode === 0 ? 'add-new-amount income' : 'add-new-amount expense'} placeholder="Amount" ref={amount} />
+            </div>
+          </div>
+          <div className='add-new-cat'>
+            <div className="add-new-cat-list">
+              <div className={catOption === 1 ? 'add-new-cat-option active' : 'add-new-cat-option'} onClick={() => setCatOption(1)}>Home</div>
+              <div className={catOption === 2 ? 'add-new-cat-option active' : 'add-new-cat-option'} onClick={() => setCatOption(2)}>Work</div>
+            </div>
+          </div>
           <div className="add-button-div">
             <button onClick={handleAddNew}>Add</button>
           </div>

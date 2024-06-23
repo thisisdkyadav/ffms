@@ -80,10 +80,10 @@
 }
 
 
-.income {
+.income, .Income {
   color: #00b84a;
 }
 
-.expense {
+.expense , .Expense{
   color: #fc2222;
 }

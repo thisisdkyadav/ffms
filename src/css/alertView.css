@@ -1,0 +1,91 @@
+.alert-view{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 11000;
+}
+
+.alert-view .alert-view-main{
+    width: 90%;
+    /* height: 90%; */
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 2px 16px 0 rgba(72, 72, 72, 0.1);
+}
+
+.alert-view .data{
+    width: 100%;
+    padding: 10px 0;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px; */
+    word-wrap: break-word;
+    
+}
+
+.buttons-div{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+
+}
+
+.alert-view .cancel-button{
+    width: 100%;
+    padding: 16px 28px;
+    font-weight: 600;
+    border: 1px solid #002fff;
+    border-radius: 1000px;
+    background-color: #ffffff;
+    color: #002fff;
+    
+}
+
+.alert-view .confirm-button{
+    width: 100%;
+    padding: 16px 28px;
+    background-color: #002fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 1000px;
+    color: #ffffff;
+    
+}
+
+.alert-view .data.danger{
+    color: red;
+    
+}
+
+
+.alert-view .cancel-button.danger{
+    border: 1px solid #027800;
+    color: #039d00;
+    
+}
+
+.alert-view .confirm-button.danger{
+    width: 100%;
+    padding: 16px 28px;
+    background-color: #ff0000;
+    font-weight: 600;
+    border: none;
+    border-radius: 1000px;
+    color: #ffffff;
+    
+}
+
+

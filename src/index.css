@@ -1,10 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+:root {
+  /* --bg-color:  #127bed; */
+  /* --bg-color:  #007cff; */
+  --bg-color: #fff;
+  /* --bg-color: #6e97ff; */
+
+  --theme-color-1: #009611;
+  --theme-color-2: #0b38ff;
+  --theme-color-3: #1943fe;
+  --theme-color-4: #2853fe;
+  --theme-color-5: #3a63fe;
+  --theme-color-6: #006eff;
+
+  
+  /* --theme-color-1: #002fff;
+  --theme-color-2: #0b38ff;
+  --theme-color-3: #1943fe;
+  --theme-color-4: #2853fe;
+  --theme-color-5: #3a63fe;
+  --theme-color-6: #4d73fe;
+
+   */
+
+}
+
 body {
   
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
+  background-color: var(--bg-color);
   /* background-color: #EAF0FF; */
   font-family: "Roboto", sans-serif;
   
@@ -21,4 +46,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+input {
+  
+  outline: none;
 }

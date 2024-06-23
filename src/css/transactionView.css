@@ -1,0 +1,79 @@
+.transaction-view{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.transaction-view .transaction-view-main{
+    width: 90%;
+    /* height: 90%; */
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 2px 16px 0 rgba(72, 72, 72, 0.1);
+}
+
+.transaction-view .data{
+    width: 100%;
+    padding: 10px 0;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px; */
+    
+}
+
+.transaction-view .data .data-item{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+}
+
+.buttons-div{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+
+}
+
+.transaction-view .delete-button{
+    /* margin: 20px 0 0; */
+    width: 100%;
+    padding: 16px 28px;
+    font-weight: 600;
+    border: 1px solid #ff0000;
+    border-radius: 1000px;
+    background-color: #ffffff;
+    color: #ff0000;
+    /* box-shadow: 0 2px 16px 1px rgba(77, 77, 77, 0.222); */
+    
+}
+
+.transaction-view .close-button{
+    /* margin: 20px 0; */
+    width: 100%;
+    padding: 16px 28px;
+    background-color: #002fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 1000px;
+    color: #ffffff;
+    /* box-shadow: 0 2px 16px 1px rgba(77, 77, 77, 0.222); */
+    
+}
+
+

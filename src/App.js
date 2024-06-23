@@ -14,18 +14,18 @@ import { auth } from './config/firebase';
 
 function App() {
   const [page, setPage] = useState(1)
-  const [authStatus, setAuthStatus] = useState(null)
+  const [authStatus, setAuthStatus] = useState(true)
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setAuthStatus(true);
-      } else {
-        setAuthStatus(false);
-      }
-    });
-    return () => unsubscribe();
-  }, [])
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       setAuthStatus(true);
+  //     } else {
+  //       setAuthStatus(false);
+  //     }
+  //   });
+  //   return () => unsubscribe();
+  // }, [])
   
   return (
     <>
