@@ -27,43 +27,6 @@ const HomePayHistory = ({history}) => {
 
     <div className="home-data">
       <HomeData history={history} setActiveID={setActiveID} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
-      <HomeData history={history} />
       <div style={{ height: 200 }}></div>
     </div>
   </>
