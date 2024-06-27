@@ -6,6 +6,12 @@
   --bg-color: #fff;
   /* --bg-color: #6e97ff; */
 
+  --income-color: #00b84a;
+  --income-color-2: #00a542;
+  --expense-color: #fc2222;
+  --income-color-light: #efffea;
+  --expense-color-light: #fff6f6;
+
   --theme-color-1: #009611;
   --theme-color-2: #0b38ff;
   --theme-color-3: #1943fe;

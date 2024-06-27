@@ -1,26 +1,31 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
-const SecNav = ({secNavList,activeSecNav,handleSecNavClick}) => {
+const SecNav = ({ optionList, activeOption, handleClick }) => {
 
-    const [up, setUp] = useState(false)
+  const [classes, setClasses] = useState("sec-nav")
 
-    useEffect(() => {
-      
-        if(!up&&secNavList.length){
-            setUp(true)
-        }
+  useEffect(() => {
 
-        return ()=>{
-            setUp(false)
-        }
-    
-    }, [])
-    
+    if (optionList.length) {
+      setClasses("sec-nav sec-nav-up")
+    } else {
+      setClasses("sec-nav")
+    }
+
+    return () => {
+    }
+
+  }, [])
+
 
   return (<>
-    {<div className={up?"sec-nav sec-nav-up":"sec-nav"}>
-        {secNavList.map((item,index)=><div key={index} onClick={()=>handleSecNavClick(index)} className={activeSecNav===index?"sec-nav-item active":"sec-nav-item"}>{item}</div>)}
-        
+    {<div className={classes}>
+      {optionList.map((item, index) =>
+        <div key={index} onClick={() => handleClick(index)} className={activeOption === index ? "sec-nav-item active" : "sec-nav-item"}>
+          {item}
+        </div>
+      )}
+
     </div>}
   </>)
 }
