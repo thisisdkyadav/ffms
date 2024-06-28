@@ -1,6 +1,9 @@
 .add-new {
     width: 100vw;
     height: 100vh;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
 }
 
 .add-new input, .add-new-contact{
@@ -22,7 +25,7 @@
 }
 
 .add-new .add-new-form {
-    padding:80px 20px 20px;
+    padding:80px 20px 0px;
     width: calc(100%);
     display: flex;
     align-items: center;
@@ -30,19 +33,38 @@
     flex-direction: column;
 }
 
-.add-new-contact,.add-new-person , .add-new-desc{
+/* .add-new-contact,.add-new-person , .add-new-desc{
     margin: 10px 10px;
     border: none;
     padding: 12px 24px;
     background-color: #ffffff;
-    border-radius: 10px;
+    border-radius: 4px;
     outline: none;
     width: 90%;
     border: 1px solid var(--theme-color-6);
+    
+} */
+.add-new-contact,.add-new-person , .add-new-desc{
+    margin: 10px 10px;
+    border: none;
+    padding: 12px 24px;
+    background-color: #f6fbff;
+    /* border-radius: 4px; */
+    outline: none;
+    width: 90%;
+    border-bottom: 1px solid var(--theme-color-6);
 
 }
-
-
+.add-new-amount, .add-new-date{
+    padding: 12px 16px;
+    background-color: #f6fbff;
+    /* border-radius: 4px; */
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid var(--theme-color-6); */
+    border: none;
+    border-bottom: 1px solid var(--theme-color-6);
+}
 .date-amount-div{
     margin: 10px 10px;
     display: grid;
@@ -54,15 +76,6 @@
 .amount-input-div{
     width: 100%;
     position: relative;
-}
-.add-new-amount, .add-new-date{
-    padding: 12px 16px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    outline: none;
-    width: 100%;
-    height: 100%;
-    border: 1px solid var(--theme-color-6);
 }
 .rupee-sign {
     position: absolute;
@@ -97,11 +110,57 @@
     padding: 12px 24px;
     background-color: #ffffff;
     transition: all ease-in-out 300ms;
+    border-bottom: 2px solid transparent;
+
 }
 .add-new .add-new-cat-option.active{
     background-color: var(--theme-color-6);
     color: #ffffff;
+    /* color: var(--theme-color-6);
+    border-bottom: 2px solid var(--theme-color-6); */
 }
+
+
+
+
+.add-new .add-new-type{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+}
+.add-new .add-new-type-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+}
+.add-new .add-new-type-option{
+    border: none;
+    text-align: center;
+    padding: 12px 24px;
+    background-color: #ffffff;
+    transition: all ease-in-out 300ms;
+
+}
+.add-new .add-new-type-option.income{
+    border-radius: 4px 0 0 4px;
+    border: 1px solid var(--income-color);
+    border-right: none;
+}
+.add-new .add-new-type-option.expense{
+    border-radius: 0 4px 4px 0;
+    border: 1px solid var(--expense-color);
+    border-left: none;
+}
+.add-new .add-new-type-option.active.income{
+    background-color: var(--income-color);
+    color: #ffffff;
+}
+.add-new .add-new-type-option.active.expense{
+    background-color: var(--expense-color);
+    color: #ffffff;
+}
+
 
 
 .add-new .add-button-div {

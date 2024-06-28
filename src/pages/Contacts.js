@@ -1,26 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { db } from "../config/firebase";
-import { collection, query, deleteDoc, getDocs, orderBy, addDoc, doc } from "firebase/firestore";
+import { collection, query, deleteDoc, getDocs, orderBy, addDoc, doc, where } from "firebase/firestore";
 import '../css/contacts.css'
 import AlertView from '../components/AlertView';
+import ContactView from '../components/ContactView';
+import {appContext} from '../context/context'
+
 
 const Contacts = () => {
 
+  const {contacts, loadContacts, setLoading} = useContext(appContext)
+
   const catList = ["Not Selected", "Home", "Work"]
 
-  const [contacts, setContacts] = useState(null);
   const [catOption, setCatOption] = useState(0);
   const [alertInfo, setAlertInfo] = useState({type: '', message: '', isActive: false, handleConfirm: () => null})
-
+  const [activeID, setActiveID] = useState(null)
 
   const name = useRef()
-
-
-  const loadData = async () => {
-    const contactsQuery = query(collection(db, "contacts"), orderBy("name"));
-    const querySnapshot = await getDocs(contactsQuery);
-    setContacts(querySnapshot);
-  }
 
   const addNewContact = async () => {
     if (name.current.value === "") {
@@ -31,41 +28,27 @@ const Contacts = () => {
       alert("Please select a category")
       return
     }
+
+    setLoading(true)
+
     await addDoc(collection(db, "contacts"), {
       name: name.current.value,
       category: catList[catOption]
     }).then(() => {
-      loadData()
-      alert("Contact added successfully")
+      loadContacts()
+      setLoading(false)
     }).catch((error) => {
-      alert("Error adding contact")
+      setLoading(false)
+      alert("Error adding contact: ", error)
     });
   }
-
-  const deleteContact = (id) => {
-    setAlertInfo({
-      type: 'danger',
-      message: 'Are you sure you want to delete this contact?',
-      isActive: true,
-      handleConfirm: async () => {
-        await deleteDoc(doc(db, "contacts", id))
-        setAlertInfo({type: '', message: '', isActive: false, handleConfirm: () => null})
-        alert("Contact deleted successfully");
-        loadData()
-      }
-    })
-  }
-
-
-  useEffect(() => {
-    loadData()
-
-  }, [])
 
   return (
     <>
 
       {alertInfo.isActive && <AlertView type={alertInfo.type} message={alertInfo.message} handleCancel={() => setAlertInfo({type: '', message: '', isActive: false, handleConfirm: () => null})} handleConfirm={alertInfo.handleConfirm} />}
+    
+      {activeID && <ContactView setActiveID={setActiveID} data={contacts[activeID]} />}
 
       <div className="contacts">
         <div className="contacts-header">
@@ -82,16 +65,14 @@ const Contacts = () => {
         </div>
         <hr />
         <div className="contacts-data">
-          {contacts && contacts.docs.map((doc) => {
-            const person = doc.data();
-            const id = doc.id;
+          {contacts && Object.values(contacts).map((contact) => {
             return (
-              <div key={id} className="contacts-item">
-                <div className="contacts-item-data person">{person.name}</div>
-                <div className="contacts-item-data category">{person.category}</div>
-                <div className="contacts-item-data delete-button">
-                  <img className='delete-button-image' src="delete.svg" alt="delete" onClick={()=>deleteContact(id)} />
-                </div>
+              <div key={contact.id} className="contacts-item" onClick={() => setActiveID(contact.id)}>
+                <div className="contacts-item-data person">{contact.name}</div>
+                <div className="contacts-item-data category">{contact.category}</div>
+                {/* <div className="contacts-item-data delete-button">
+                  <img className='delete-button-image' src="delete.svg" alt="delete" onClick={()=>deleteContact(contact.id)} />
+                </div> */}
               </div>
             );
           })}

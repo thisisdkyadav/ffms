@@ -3,27 +3,35 @@ import '../css/transactionView.css'
 import AlertView from './AlertView'
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from '../config/firebase'
+import { appContext } from '../context/context';
 
 const TransactionView = ({ setActiveID, data }) => {
 
-  const [alertInfo, setAlertInfo] = useState({type: '', message: '', isActive: false, handleConfirm: () => null})
+  const { alertPopUp, loadTransactions, setLoading } = React.useContext(appContext)
+
 
   const deleteTransaction = () => {
-    setAlertInfo({
+
+    alertPopUp({
       type: 'danger',
       message: 'Are you sure you want to delete this transaction?',
-      isActive: true,
       handleConfirm: async () => {
-        await deleteDoc(doc(db, "transactions", data.id))
-        alert("Transaction deleted successfully");
-        setActiveID(null)
+        setLoading(true)
+        await deleteDoc(doc(db, "transactions", data.id)).then(() => {
+          loadTransactions()
+          setActiveID(null)
+          setLoading(false)
+        }).catch((error) => {
+          setLoading(false)
+          alert("Error deleting transaction: ", error)
+        });
       }
     })
+
   }
 
   return (
     <>
-      {alertInfo.isActive && <AlertView type={alertInfo.type} message={alertInfo.message} handleCancel={() => setAlertInfo({type: '', message: '', isActive: false, handleConfirm: () => null})} handleConfirm={alertInfo.handleConfirm} />}
       <div className="transaction-view">
         <div className="transaction-view-main">
           <div className="data">

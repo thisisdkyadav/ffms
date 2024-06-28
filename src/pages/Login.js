@@ -7,7 +7,7 @@ const Login = () => {
 
   // firebase login with google
   const signInWithGoogle = async () => {
-    const res = await signInWithPopup(auth, googleProvider)
+    const res = await signInWithPopup(auth, googleProvider)  // login with google
   }
 
   return (
